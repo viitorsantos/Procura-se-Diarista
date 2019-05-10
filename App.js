@@ -4,6 +4,8 @@ import Cadastro from './pages/Cadastro';
 import ClientePrincipal from './pages/ClientePrincipal';
 import PerfilCliente from './pages/PerfilCliente';
 import SolicitaLimpeza from './pages/SolicitaLimpeza';
+import ConfirmaLimpeza from './pages/ConfirmaLimpeza';
+import DiaristaPrincipal from './pages/DiaristaPrincipal';
 import { createAppContainer, createStackNavigator} from 'react-navigation'; 
 
 const AppNavigator = createStackNavigator({
@@ -59,6 +61,25 @@ const AppNavigator = createStackNavigator({
             headerTitleStyle:{
               color:'white',
             }
+        });
+      }
+    },
+    'ConfirmaLimpeza' : {
+      screen : ConfirmaLimpeza,
+      navigationOptions:({navigation})=>{
+        return({
+            title:'Solicitar Diária',
+            headerTitleStyle:{
+              color:'white',
+            }
+        });
+      }
+    },
+    'DiaristaPrincipal' : {
+      screen : DiaristaPrincipal,
+      navigationOptions:({navigation})=>{
+        return({
+            header: null,
         });
       }
     },

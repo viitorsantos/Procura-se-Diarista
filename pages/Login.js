@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Button, Text, StyleSheet,TextInput,TouchableOpacity } from 'react-native';
-import { createAppContainer, createStackNavigator} from 'react-navigation'; 
 
 
 const Login = ({ navigation }) => (

@@ -15,11 +15,11 @@ const listaDiaristas = [
   ];
   
 
-const Solicitacao = ({ solicitacao }) => (
+const Pendente = ({ pendente }) => (
     <ScrollView>
     <View style={styles.solicitacaoView}>
-        <Text style={styles.solicitacao}>Você ainda não possui diárias solicitadas.</Text>
-        <Text style={styles.solicitacao}>Agende uma diária agora mesmo clicando no +</Text>
+        <Text style={styles.solicitacao}>Você ainda não possui diárias agendadas</Text>
+        <Text style={styles.solicitacao}>Aguarde até que seja solicitada uma diária</Text>
     </View>
     </ScrollView>
 );
@@ -41,13 +41,13 @@ const Agendado = ({ agendado }) => (
             </CardItem>
             <View style={styles.status}>
                 <Text note style={styles.cancelar}>CANCELAR</Text>
-                <Text note style={styles.agendado}>AGENDADO</Text>
+                <Text note style={styles.agendado}>INICIAR</Text>
             </View>
         </Card>))}
     </Content>
     </ScrollView>
 );
-const Concluido = ({ concluido }) => (
+const Realizado = ({ realizado }) => (
     <ScrollView>
     <Content>
         {listaDiaristas.map(lista => (
@@ -64,21 +64,19 @@ const Concluido = ({ concluido }) => (
             </Left>
             </CardItem>
             <View style={styles.status}>
-                <Text note style={styles.cancelar}>AVALIE O SERVIÇO</Text>
+                <Text note style={styles.cancelar}>AGUARDANDO AVALIAÇÃO DO CLIENTE</Text>
             </View>
         </Card>))}
     </Content>
     </ScrollView>
 );
 
-const ClientePrincipal = ({ navigation }) => (
+const DiaristaPrincipal = ({ navigation }) => (
     <Container>
         <Header style={styles.header} >
             <Body>
                 <Text style={styles.texto}>Agenda</Text>
             </Body>
-            <Icon style={styles.icon3} type="Feather" name="plus-circle" 
-            onPress={() => navigation.navigate('SolicitaLimpeza') } />
             <Icon style={styles.icon} type="FontAwesome" name="user-o" 
             onPress={() => navigation.navigate('PerfilCliente') } />
             <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
@@ -86,14 +84,14 @@ const ClientePrincipal = ({ navigation }) => (
         </Header>
         <View style={styles.container}>
             <Tabs>
-            <Tab heading={<TabHeading style={styles.menu} ><Text>Solicitações</Text></TabHeading>}>
-                <Solicitacao />
+            <Tab heading={<TabHeading style={styles.menu} ><Text>Pendente</Text></TabHeading>}>
+                <Pendente />
             </Tab>
             <Tab heading={<TabHeading style={styles.menu} ><Text>Agendado</Text></TabHeading>}>
                 <Agendado agendado={listaDiaristas}/>
             </Tab>
-            <Tab heading={<TabHeading style={styles.menu} ><Text>Concluídos</Text></TabHeading>}>
-                <Concluido concluido={listaDiaristas}/>
+            <Tab heading={<TabHeading style={styles.menu} ><Text>Realizado</Text></TabHeading>}>
+                <Realizado concluido={listaDiaristas}/>
             </Tab>
             </Tabs>
         </View>
@@ -124,11 +122,6 @@ const styles = StyleSheet.create({
     icon2: {
         color:'white',
         marginTop:15,
-    },
-    icon3: {
-        color:'white',
-        marginTop:15,
-        marginRight:30,
     },
     solicitacaoView:{
         marginTop:80,
@@ -161,4 +154,4 @@ const styles = StyleSheet.create({
     }
   });
   
-export default ClientePrincipal;
+export default DiaristaPrincipal;
