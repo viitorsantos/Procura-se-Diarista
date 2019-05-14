@@ -7,6 +7,4 @@ const PerfilCliente = ({ navigation }) => (
   </View>
 );
 
-
-
 export default PerfilCliente;

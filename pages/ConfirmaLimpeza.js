@@ -45,7 +45,7 @@ const ConfirmaLimpeza = ({ navigation }) => (
                 <Text note style={styles.endereco}>Limpeza Geral</Text>
          </View>
          <View style={styles.botao}>
-            <Button title="Agendar" color="#00BFFF" onPress={() => navigation.navigate('Entrar') }/>
+            <Button title="Agendar" color="#00BFFF" onPress={() => navigation.navigate('ConfirmacaoLimpeza') }/>
          </View>
     </Content>
   </ScrollView>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
       fontSize:18,
   },
   carditem:{
-      backgroundColor:'#F8F8FF',
+      backgroundColor:'#fafafa',
   },
   textodescricao:{
       fontSize:14,

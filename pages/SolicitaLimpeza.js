@@ -36,7 +36,7 @@ const SolicitaLimpeza = ({ navigation }) => (
 
 const styles = StyleSheet.create({
   carditem:{
-      backgroundColor:'#F8F8FF',
+      backgroundColor:'#fafafa',
   },
   textodescricao:{
       fontSize:14,

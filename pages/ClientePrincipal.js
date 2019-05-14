@@ -134,12 +134,12 @@ const styles = StyleSheet.create({
         marginTop:80,
     },
     solicitacao: {
-        fontSize:30,
-        marginTop:40,
+        fontSize:15,
+        marginTop:70,
         textAlign:'center',
     },
     carditem:{
-        backgroundColor:'#F8F8FF',
+        backgroundColor:'#fafafa',
     },
     body:{
         marginLeft:35,

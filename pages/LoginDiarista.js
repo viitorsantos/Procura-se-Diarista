@@ -5,14 +5,14 @@ import { View, Button, Text, StyleSheet,TextInput,TouchableOpacity } from 'react
 const Login = ({ navigation }) => (
     <View>
         <TextInput style={styles.input1} placeholder="Email"/>
-        <TextInput style={styles.input}
+        <TextInput style={styles.input} 
             secureTextEntry
-         placeholder="Senha"/>
+            placeholder="Senha"/>
         <TouchableOpacity onPress={this._handleHelpPress}>
             <Text style={styles.helpLinkText}>Esqueceu sua senha? </Text>
         </TouchableOpacity>
         <View style={styles.botao}>
-             <Button title="Entrar" color="#00BFFF" onPress={() => navigation.navigate('Entrar') }/>
+             <Button title="Entrar" color="#00BFFF" onPress={() => navigation.navigate('DiaristaPrincipal') }/>
         </View>
         <View style={styles.botao}>
              <Button title="Cadastrar" color="#00BFFF" onPress={() => navigation.navigate('Cadastro') }/>

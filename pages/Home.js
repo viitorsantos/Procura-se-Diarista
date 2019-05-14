@@ -8,7 +8,7 @@ const Home = ({ navigation }) => (
     <Text style={styles.logo}>Logo</Text>
     <Text style={styles.desejoAcessar}>Deseja acessar como?</Text>
     <View style={styles.botao}>
-      <Button title="Diarista" color="#00BFFF" onPress={() => navigation.navigate('Login') }/>
+      <Button title="Diarista" color="#00BFFF" onPress={() => navigation.navigate('LoginDiarista') }/>
      </View>
      <View style={styles.botao}>
       <Button title="Cliente" color="#00BFFF" onPress={() => navigation.navigate('Login') }/>
