@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Button, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
+import axios from 'axios';
 
 
 export default class Cadastro extends React.Component{
@@ -26,6 +27,7 @@ export default class Cadastro extends React.Component{
     login(){
         console.log(this.state);
     }
+    
     render(){
         return(
             <ScrollView>

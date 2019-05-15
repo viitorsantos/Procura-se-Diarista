@@ -6,7 +6,6 @@ import PerfilCliente from './pages/PerfilCliente';
 import SolicitaLimpeza from './pages/SolicitaLimpeza';
 import ConfirmaLimpeza from './pages/ConfirmaLimpeza';
 import DiaristaPrincipal from './pages/DiaristaPrincipal';
-import LoginDiarista from './pages/LoginDiarista';
 import ConfirmacaoLimpeza from './pages/ConfirmacaoLimpeza';
 import LimpezaConfirmada from './pages/LimpezaConfirmada';
 import { createAppContainer, createStackNavigator} from 'react-navigation'; 
@@ -17,17 +16,6 @@ const AppNavigator = createStackNavigator({
     },
     'Login' : {
       screen : Login,
-      navigationOptions:({navigation})=>{
-        return({
-            title:'Login',
-            headerTitleStyle:{
-              color:'white',
-            },
-        });
-      }
-    },
-    'LoginDiarista' : {
-      screen : LoginDiarista,
       navigationOptions:({navigation})=>{
         return({
             title:'Login',

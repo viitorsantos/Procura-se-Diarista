@@ -1,21 +1,26 @@
 import React from 'react';
 import { View, Button, Text, StyleSheet} from 'react-native';
-import { createAppContainer, createStackNavigator} from 'react-navigation'; 
 
-const Home = ({ navigation }) => (
+export default class Home extends React.Component{
+  render() {
+    return (
   <View>
 
     <Text style={styles.logo}>Logo</Text>
     <Text style={styles.desejoAcessar}>Deseja acessar como?</Text>
     <View style={styles.botao}>
-      <Button title="Diarista" color="#00BFFF" onPress={() => navigation.navigate('LoginDiarista') }/>
+      <Button title="Diarista" color="#00BFFF"
+       onPress={() => this.props.navigation.navigate('Login',{id:1}) }/>
      </View>
      <View style={styles.botao}>
-      <Button title="Cliente" color="#00BFFF" onPress={() => navigation.navigate('Login') }/>
+      <Button title="Cliente" color="#00BFFF" 
+      onPress={() => this.props.navigation.navigate('Login',{id:2}) }/>
      </View>
    
   </View>
-);
+   );
+  }
+}
 
 const styles = StyleSheet.create({
     logo:{
@@ -34,4 +39,3 @@ const styles = StyleSheet.create({
         marginLeft:31,
     },
 });
-export default Home;

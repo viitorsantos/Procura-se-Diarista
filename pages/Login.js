@@ -2,7 +2,17 @@ import React from 'react';
 import { View, Button, Text, StyleSheet,TextInput,TouchableOpacity } from 'react-native';
 
 
-const Login = ({ navigation }) => (
+export default class Login extends React.Component{
+    render() {
+        const id = this.props.navigation.getParam('id', '');
+        let tipologin = '';
+        if(id==1){
+            tipologin = 'DiaristaPrincipal';
+        }else{
+            tipologin = 'Entrar';
+        }
+      
+      return (
     <View>
         <TextInput style={styles.input1} placeholder="Email"/>
         <TextInput style={styles.input}
@@ -12,17 +22,22 @@ const Login = ({ navigation }) => (
             <Text style={styles.helpLinkText}>Esqueceu sua senha? </Text>
         </TouchableOpacity>
         <View style={styles.botao}>
-             <Button title="Entrar" color="#00BFFF" onPress={() => navigation.navigate('Entrar') }/>
+             <Button title="Entrar" color="#00BFFF" 
+             onPress={() => this.props.navigation.navigate(tipologin) }/>
         </View>
         <View style={styles.botao}>
-             <Button title="Cadastrar" color="#00BFFF" onPress={() => navigation.navigate('Cadastro') }/>
+             <Button title="Cadastrar" color="#00BFFF" 
+             onPress={() => this.props.navigation.navigate('Cadastro') }/>
         </View>
         <Text style={styles.ou}>OU</Text>
         <View style={styles.botao}>
-             <Button title="Entrar com Facebook" color="#00BFFF" onPress={() => navigation.navigate('') }/>
+             <Button title="Entrar com Facebook" color="#00BFFF" 
+             onPress={() => navigation.navigate('') }/>
         </View>
     </View>
-);
+  );
+}
+}
 
   const styles = StyleSheet.create({
     input1:{
@@ -59,4 +74,4 @@ const Login = ({ navigation }) => (
     },
 });
 
-export default Login;
+

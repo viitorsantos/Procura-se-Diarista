@@ -80,7 +80,7 @@ const DiaristaPrincipal = ({ navigation }) => (
             <Icon style={styles.icon} type="FontAwesome" name="user-o" 
             onPress={() => navigation.navigate('PerfilCliente') } />
             <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
-            onPress={() => navigation.navigate('LoginDiarista') } />
+            onPress={() => navigation.navigate('Login') } />
         </Header>
         <View style={styles.container}>
             <Tabs>
