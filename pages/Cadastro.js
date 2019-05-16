@@ -31,6 +31,7 @@ export default class Cadastro extends React.Component{
     render(){
         return(
             <ScrollView>
+                <View style={styles.form}>
                     <TextInput style={styles.input1} 
                         placeholder="Nome Completo"
                         value={this.state.nome}
@@ -68,9 +69,10 @@ export default class Cadastro extends React.Component{
                         value={this.state.confirmasenha}
                         onChangeText={value => this.alteraCampo('confirmasenha',value)}
                         />
-                    <View style={styles.botao}>
-                        <Button title="Cadastrar" color="#00BFFF"  onPress={()=>this.login()}/>
-                    </View>
+                </View>
+                <View style={styles.botao}>
+                    <Button title="Cadastrar" color="#00BFFF"  onPress={()=>this.login()}/>
+                </View>
             </ScrollView>
         )
     }
@@ -78,25 +80,25 @@ export default class Cadastro extends React.Component{
 }
 
 const styles = StyleSheet.create({
+    form:{
+        paddingLeft:30,
+        paddingRight:30,
+    },
     input1:{
-        width:300,
         height:50,
         borderBottomWidth:2,
         borderBottomColor:'#7B68EE',
-        marginLeft:28,
         marginTop:40,
     },
     input:{
-        width:300,
         height:50,
         borderBottomWidth:2,
         borderBottomColor:'#7B68EE',
-        marginLeft:28,
         marginTop:10,
     },
     botao: {
-        width:300,
         marginTop:15,
-        marginLeft:31,
+        paddingLeft:30,
+        paddingRight:30,
     },
 });

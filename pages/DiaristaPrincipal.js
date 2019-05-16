@@ -15,88 +15,91 @@ const listaDiaristas = [
   ];
   
 
-const Pendente = ({ pendente }) => (
-    <ScrollView>
-    <View style={styles.solicitacaoView}>
-        <Text style={styles.solicitacao}>Você ainda não possui diárias agendadas</Text>
-        <Text style={styles.solicitacao}>Aguarde até que seja solicitada uma diária</Text>
-    </View>
-    </ScrollView>
-);
-const Agendado = ({ agendado }) => (
-    <ScrollView>
-    <Content>
-        {listaDiaristas.map(lista => (
-        <Card key={lista.id}>
-            <CardItem style={styles.carditem}>
-            <Left>
-                <Thumbnail source={{ uri: lista.foto}} />
-                <Body style={styles.body}>
-                <Text>{lista.nome}</Text>
-                <Text note>Dia {lista.dia} às {lista.hora}h</Text>
-                <Text note>{lista.endereco}</Text>
-                <Text style={styles.textodescricao}>{lista.descricao}</Text>
-                </Body>
-            </Left>
-            </CardItem>
-            <View style={styles.status}>
-                <Text note style={styles.cancelar}>CANCELAR</Text>
-                <Text note style={styles.agendado}>INICIAR</Text>
-            </View>
-        </Card>))}
-    </Content>
-    </ScrollView>
-);
-const Realizado = ({ realizado }) => (
-    <ScrollView>
-    <Content>
-        {listaDiaristas.map(lista => (
-        <Card key={lista.id}>
-            <CardItem style={styles.carditem}>
-            <Left>
-                <Thumbnail source={{ uri: lista.foto}} />
-                <Body style={styles.body}>
-                <Text>{lista.nome}</Text>
-                <Text note>Dia {lista.dia} às {lista.hora}h</Text>
-                <Text note>{lista.endereco}</Text>
-                <Text style={styles.textodescricao}>{lista.descricao}</Text>
-                </Body>
-            </Left>
-            </CardItem>
-            <View style={styles.status}>
-                <Text note style={styles.cancelar}>AGUARDANDO AVALIAÇÃO DO CLIENTE</Text>
-            </View>
-        </Card>))}
-    </Content>
-    </ScrollView>
-);
-
-const DiaristaPrincipal = ({ navigation }) => (
-    <Container>
-        <Header style={styles.header} >
-            <Body>
-                <Text style={styles.texto}>Agenda</Text>
-            </Body>
-            <Icon style={styles.icon} type="FontAwesome" name="user-o" 
-            onPress={() => navigation.navigate('PerfilCliente') } />
-            <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
-            onPress={() => navigation.navigate('Login') } />
-        </Header>
-        <View style={styles.container}>
-            <Tabs>
-            <Tab heading={<TabHeading style={styles.menu} ><Text>Pendente</Text></TabHeading>}>
-                <Pendente />
-            </Tab>
-            <Tab heading={<TabHeading style={styles.menu} ><Text>Agendado</Text></TabHeading>}>
-                <Agendado agendado={listaDiaristas}/>
-            </Tab>
-            <Tab heading={<TabHeading style={styles.menu} ><Text>Realizado</Text></TabHeading>}>
-                <Realizado concluido={listaDiaristas}/>
-            </Tab>
-            </Tabs>
-        </View>
-    </Container>
-);
+export default class DiaristaPrincipal extends React.Component{
+    render() {
+        const Pendente = ({ pendente }) => (
+            <ScrollView>
+                <View style={styles.solicitacaoView}>
+                    <Text style={styles.solicitacao}>Você ainda não possui diárias agendadas</Text>
+                    <Text style={styles.solicitacao}>Aguarde até que seja solicitada uma diária</Text>
+                </View>
+            </ScrollView>
+        );
+        const Agendado = ({ agendado }) => (
+            <ScrollView>
+            <Content>
+                {listaDiaristas.map(lista => (
+                <Card key={lista.id}>
+                    <CardItem style={styles.carditem}>
+                    <Left>
+                        <Thumbnail source={{ uri: lista.foto}} />
+                        <Body style={styles.body}>
+                        <Text>{lista.nome}</Text>
+                        <Text note>Dia {lista.dia} às {lista.hora}h</Text>
+                        <Text note>{lista.endereco}</Text>
+                        <Text style={styles.textodescricao}>{lista.descricao}</Text>
+                        </Body>
+                    </Left>
+                    </CardItem>
+                    <View style={styles.status}>
+                        <Text note style={styles.cancelar}>CANCELAR</Text>
+                        <Text note style={styles.agendado}>INICIAR</Text>
+                    </View>
+                </Card>))}
+            </Content>
+            </ScrollView>
+        );
+        const Realizado = ({ realizado }) => (
+            <ScrollView>
+            <Content>
+                {listaDiaristas.map(lista => (
+                <Card key={lista.id}>
+                    <CardItem style={styles.carditem}>
+                    <Left>
+                        <Thumbnail source={{ uri: lista.foto}} />
+                        <Body style={styles.body}>
+                        <Text>{lista.nome}</Text>
+                        <Text note>Dia {lista.dia} às {lista.hora}h</Text>
+                        <Text note>{lista.endereco}</Text>
+                        <Text style={styles.textodescricao}>{lista.descricao}</Text>
+                        </Body>
+                    </Left>
+                    </CardItem>
+                    <View style={styles.status}>
+                        <Text note style={styles.cancelar}>AGUARDANDO AVALIAÇÃO DO CLIENTE</Text>
+                    </View>
+                </Card>))}
+            </Content>
+            </ScrollView>
+        );
+      return (
+            <Container>
+                <Header style={styles.header} >
+                    <Body>
+                        <Text style={styles.texto}>Agenda</Text>
+                    </Body>
+                    <Icon style={styles.icon} type="FontAwesome" name="user-o" 
+                    onPress={() => this.props.navigation.navigate('PerfilCliente') } />
+                    <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
+                    onPress={() => this.props.navigation.navigate('Login') } />
+                </Header>
+                <View style={styles.container}>
+                    <Tabs>
+                    <Tab heading={<TabHeading style={styles.menu} ><Text>Pendente</Text></TabHeading>}>
+                        <Pendente />
+                    </Tab>
+                    <Tab heading={<TabHeading style={styles.menu} ><Text>Agendado</Text></TabHeading>}>
+                        <Agendado agendado={listaDiaristas}/>
+                    </Tab>
+                    <Tab heading={<TabHeading style={styles.menu} ><Text>Realizado</Text></TabHeading>}>
+                        <Realizado concluido={listaDiaristas}/>
+                    </Tab>
+                    </Tabs>
+                </View>
+            </Container>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     header: { 
@@ -154,4 +157,3 @@ const styles = StyleSheet.create({
     }
   });
   
-export default DiaristaPrincipal;

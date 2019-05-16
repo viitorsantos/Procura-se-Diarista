@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
         marginTop:100,
     },
     botao: {
-        width:300,
         marginTop:15,
-        marginLeft:31,
+        paddingLeft:30,
+        paddingRight:30,
     },
 });
