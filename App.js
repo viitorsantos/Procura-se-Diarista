@@ -1,8 +1,10 @@
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
+import CadastroEnderecos from './pages/CadastroEnderecos';
 import ClientePrincipal from './pages/ClientePrincipal';
 import PerfilCliente from './pages/PerfilCliente';
+import PerfilDiarista from './pages/PerfilDiarista';
 import SolicitaLimpeza from './pages/SolicitaLimpeza';
 import ConfirmaLimpeza from './pages/ConfirmaLimpeza';
 import DiaristaPrincipal from './pages/DiaristaPrincipal';
@@ -36,6 +38,17 @@ const AppNavigator = createStackNavigator({
         });
       }
     },
+    'CadastroEnderecos' : {
+      screen : CadastroEnderecos,
+      navigationOptions:({navigation})=>{
+        return({
+            title:'Adicionar Endereços',
+            headerTitleStyle:{
+              color:'white',
+            }
+        });
+      }
+    },
     'Entrar' : {
       screen : ClientePrincipal,
       navigationOptions:({navigation})=>{
@@ -46,6 +59,17 @@ const AppNavigator = createStackNavigator({
     },
     'PerfilCliente' : {
       screen : PerfilCliente,
+      navigationOptions:({navigation})=>{
+        return({
+            title:'Perfil',
+            headerTitleStyle:{
+              color:'white',
+            }
+        });
+      }
+    },
+    'PerfilDiarista' : {
+      screen : PerfilDiarista,
       navigationOptions:({navigation})=>{
         return({
             title:'Perfil',

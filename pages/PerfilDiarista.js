@@ -8,9 +8,8 @@ const perfil = [
    foto: 'https://secure.gravatar.com/avatar/4a75e363796021a2bc2b9f805bacc2da?s=500&d=mm&r=g'},
 ];
 
-const enderecos = [
-  { id: 1, tipo: 'Casa', rua: 'Rua A', numero:'10', bairro:'Centro', cidade:'Marília-SP'},
-  { id: 2, tipo: 'Escritório', rua: 'Rua B', numero:'16', bairro:'Centro', cidade:'Marília-SP'},
+const descricao = [
+  { id: 1, descricao: 'texto texto texto texto texto texto texto texto texto texto texto texto texto'},
 ];
 
 export default class PerfilCliente extends React.Component{
@@ -32,20 +31,13 @@ export default class PerfilCliente extends React.Component{
               </CardItem>
           </Card>))}
       </Content>
-      <View>
-        <Text style={styles.endereco}>Meus Endereços</Text>
-        <Icon style={styles.icon} type="Feather" name="plus-circle" 
-                    onPress={() => this.props.navigation.navigate('CadastroEnderecos') } />
-      </View>
       <Content>
-          {enderecos.map(lista2 => (
+          {descricao.map(lista2 => (
           <Card  key={lista2.id}>
               <CardItem style={styles.carditem}>
               <Left>
                   <Body>
-                  <Text style={styles.texto}>{lista2.tipo}</Text>
-                  <Text style={styles.texto}>{lista2.rua},{lista2.numero}</Text>
-                  <Text style={styles.texto}>{lista2.bairro} {lista2.cidade}</Text>
+                  <Text style={styles.texto}>{lista2.descricao}</Text>
                   </Body>
               </Left>
               </CardItem>
@@ -72,17 +64,5 @@ const styles = StyleSheet.create({
     },
     carditem:{
       backgroundColor:'#fafafa',
-    },
-    icon: {
-      color:'#00BFFF',
-      paddingRight:10,
-      flexGrow:1,
-      textAlign:'right',
-      marginTop:-30,
-    },
-    endereco:{
-      fontWeight:'bold',
-      fontSize:15,
-      padding:5,
     },
 });

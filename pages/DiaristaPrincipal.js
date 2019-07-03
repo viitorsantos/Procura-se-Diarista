@@ -79,7 +79,7 @@ export default class DiaristaPrincipal extends React.Component{
                         <Text style={styles.texto}>Agenda</Text>
                     </Body>
                     <Icon style={styles.icon} type="FontAwesome" name="user-o" 
-                    onPress={() => this.props.navigation.navigate('PerfilCliente') } />
+                    onPress={() => this.props.navigation.navigate('PerfilDiarista') } />
                     <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
                     onPress={() => this.props.navigation.navigate('Login') } />
                 </Header>
