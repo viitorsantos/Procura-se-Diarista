@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Button, Text, StyleSheet} from 'react-native';
+import { View, Button, Text, StyleSheet, Image, AppRegistry} from 'react-native';
 
 export default class Home extends React.Component{
   render() {
     return (
-  <View>
-
-    <Text style={styles.logo}>Logo</Text>
+  <View>      
+    <View style={styles.viewLogo}>
+      <Image style={styles.logo} source={require('../imagens/logo.png')}/>
+    </View>
     <Text style={styles.desejoAcessar}>Deseja acessar como?</Text>
     <View style={styles.botao}>
       <Button title="Diarista" color="#00BFFF"
@@ -24,14 +25,15 @@ export default class Home extends React.Component{
 
 const styles = StyleSheet.create({
     logo:{
-        fontSize:40,
-        textAlign:'center',
-        marginTop:100,
+        width:170,
+        height:300,
+    },
+    viewLogo:{
+        alignItems:'center',
     },
     desejoAcessar:{
         fontSize:14,
         textAlign:'center',
-        marginTop:100,
     },
     botao: {
         marginTop:15,
@@ -39,3 +41,4 @@ const styles = StyleSheet.create({
         paddingRight:30,
     },
 });
+
