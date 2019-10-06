@@ -1,9 +1,16 @@
-import Home from './pages/Home';
+import React from 'react';
+import Routes from './src/routes';
+
+export default function App(){
+  return <Routes/>
+}
+
+/*import Home from './pages/Home';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
 import CadastroEnderecos from './pages/CadastroEnderecos';
 import ClientePrincipal from './pages/ClientePrincipal';
-import PerfilCliente from './pages/PerfilCliente';
+import PerfilCliente from './page s/PerfilCliente';
 import PerfilDiarista from './pages/PerfilDiarista';
 import SolicitaLimpeza from './pages/SolicitaLimpeza';
 import ConfirmaLimpeza from './pages/ConfirmaLimpeza';
@@ -128,7 +135,8 @@ const AppNavigator = createStackNavigator({
         });
       }
     },
-},{
+},
+{
   defaultNavigationOptions:{
     title:'Procura-se Diarista',
     headerTintColor:'white',
@@ -148,4 +156,4 @@ const AppNavigator = createStackNavigator({
 });
 
 const AppContainer = createAppContainer(AppNavigator);
-export default AppContainer;
+export default AppContainer;*/
