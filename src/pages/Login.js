@@ -1,28 +1,62 @@
-import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, Button, Text, StyleSheet,TextInput,TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, KeyboardAvoidingView, Button, Text, StyleSheet,TextInput,TouchableOpacity, Image, Alert, AsyncStorage } from 'react-native';
 
-import api from '../services/api';
+import baseUrl from '../services/api';
 import logo from '../assets/logo.png';
 
-export default function Login(){    
+export default function Login({ navigation }){    
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+
+    useEffect(() => {
+        AsyncStorage.getItem('user').then(user => {
+            if(user){
+                if(user.Type == 1){
+                    navigation.navigate('ClientePrincipal');
+                }else{
+                    navigation.navigate('DiaristaPrincipal');
+                }                
+            }
+        })
+    }, []);
 
     async function loginSubmit(){
         let authentication = JSON.stringify({
             Email :email,
             Password :senha
         });
-        
-        const response = await api.post('api/authentication/login', {
-            authentication : authentication
-            },
-            { headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            }
-        });
 
-        console.log(response);
+        var result = await fetch(baseUrl + 'api/authentication/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: authentication
+        })
+        .then(response=> {
+            if (response.ok) {
+                return response.json();
+            }else{
+                Alert.alert(
+                    'Erro conectar',
+                    'E-mail ou senha invalidos',
+                    [
+                      {text: 'OK'},
+                    ],
+                );
+            }
+        })
+        .then(resposta => { return resposta; })
+        .catch((error) => { console.error(error); });
+
+        await AsyncStorage.setItem('user', JSON.stringify(result));
+
+        if(result.Type == 1){
+            navigation.navigate('DiaristaPrincipal');
+        }else{
+            navigation.navigate('ClientePrincipal');
+        }
     };
 
     return (
@@ -99,8 +133,8 @@ export default function Login(){
         alignItems:'center'
     },
     logo:{
-        width:170,
-        height:300,
+        height:250,
+        resizeMode: "contain"
     },
     button:{
         marginTop:10,

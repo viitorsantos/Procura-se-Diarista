@@ -1,7 +1,2 @@
-import axios from 'axios';
-
-const api = axios.create({
-    baseURL: 'http://192.168.15.11:64498/',
-    responseType: "json"
-});
+const api = "http://192.168.15.11:80/";
 export default api;
