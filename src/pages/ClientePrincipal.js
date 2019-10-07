@@ -1,4 +1,5 @@
 import React from 'react';
+import { SafeAreaView } from 'react-navigation';
 import { Container, Header, Body, View, Text, Tab, Tabs, Icon, TabHeading, Content,
 Card, CardItem, Left, Thumbnail } from 'native-base';
 import { StyleSheet, Button, ScrollView } from 'react-native';
@@ -15,19 +16,14 @@ const listaDiaristas = [
   ];
   
 
+import ListaDiariasCliente from '../components/ListaDiariasCliente';
+import Solicitacao from '../components/ClienteListItens/Solicitacao';
+import Agendado from '../components/ClienteListItens/Agendado';
+import Concluido from '../components/ClienteListItens/Concluido';
 
-
-export default class ClientePrincipal extends React.Component{
-    render() {
-        const Solicitacao = ({ solicitacao }) => (
-            <ScrollView>
-            <View style={styles.solicitacaoView}>
-                <Text style={styles.solicitacao}>Você ainda não possui diárias solicitadas.</Text>
-                <Text style={styles.solicitacao}>Agende uma diária agora mesmo clicando no +</Text>
-            </View>
-            </ScrollView>
-        );
-        const Agendado = ({ agendado }) => (
+export default function ClientePrincipal(){
+    
+      /*  const Agendado = ({ agendado }) => (
             <ScrollView>
             <Content>
                 {listaDiaristas.map(lista => (
@@ -73,22 +69,30 @@ export default class ClientePrincipal extends React.Component{
                 </Card>))}
             </Content>
             </ScrollView>
-        );
-      return (
-            <Container>
-                <Header style={styles.header} >
-                    <Body>
-                        <Text style={styles.texto}>Agenda</Text>
-                    </Body>
-                    <Icon style={styles.icon3} type="Feather" name="plus-circle" 
-                    onPress={() => this.props.navigation.navigate('SolicitaLimpeza') } />
-                    <Icon style={styles.icon} type="FontAwesome" name="user-o" 
-                    onPress={() => this.props.navigation.navigate('PerfilCliente') } />
-                    <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
-                    onPress={() => this.props.navigation.navigate('Login') } />
-                </Header>
-                <View style={styles.container}>
-                    <Tabs>
+
+            
+                    <Tab heading={<TabHeading style={styles.menu} ><Text>Agendado</Text></TabHeading>}>
+                        <Agendado agendado={listaDiaristas}/>
+                    </Tab>
+                    <Tab heading={<TabHeading style={styles.menu} ><Text>Concluídos</Text></TabHeading>}>
+                        <Concluido concluido={listaDiaristas}/>
+                    </Tab>
+        );*/
+    return (
+        <SafeAreaView forceInset={{top: 'always'}} style={styles.container}>
+            <Header style={styles.header} >
+                <Body>
+                    <Text style={styles.texto}>Agenda</Text>
+                </Body>
+                <Icon style={styles.icon3} type="Feather" name="plus-circle" 
+                onPress={() => this.props.navigation.navigate('SolicitaLimpeza') } />
+                <Icon style={styles.icon} type="FontAwesome" name="user-o" 
+                onPress={() => this.props.navigation.navigate('PerfilCliente') } />
+                <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
+                onPress={() => this.props.navigation.navigate('Login') } />
+            </Header>
+            <View style={styles.container}>
+                <Tabs>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Solicitações</Text></TabHeading>}>
                         <Solicitacao />
                     </Tab>
@@ -98,17 +102,18 @@ export default class ClientePrincipal extends React.Component{
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Concluídos</Text></TabHeading>}>
                         <Concluido concluido={listaDiaristas}/>
                     </Tab>
-                    </Tabs>
-                </View>
-            </Container>
-        );
-    }
+                </Tabs>
+            </View>
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
+    agenda:{
+
+    },
     header: { 
-        backgroundColor: "#00BFFF",
-        marginTop: 24.2,
+        backgroundColor: "#00BFFF"
     },
     menu: {
         backgroundColor: "#1E90FF",
@@ -134,14 +139,6 @@ const styles = StyleSheet.create({
         color:'white',
         marginTop:15,
         marginRight:30,
-    },
-    solicitacaoView:{
-        marginTop:80,
-    },
-    solicitacao: {
-        fontSize:15,
-        marginTop:70,
-        textAlign:'center',
     },
     carditem:{
         backgroundColor:'#fafafa',
