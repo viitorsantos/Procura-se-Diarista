@@ -21,10 +21,10 @@ export default function Home( {navigation} ){
         <Image style={styles.logo} source={logo} />
         <Text style={styles.desejoAcessar}>Deseja acessar como?</Text>
         <View style={styles.form}>
-        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Login',{id:1}) }>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
             <Text style={styles.buttonText}>DIARISTA</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Login',{id:2}) }>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.buttonText}>CLIENTE</Text>
             </TouchableOpacity>
         </View>

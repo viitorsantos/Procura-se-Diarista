@@ -1,88 +1,85 @@
-import React from 'react';
-import { View, Button, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import { View, Button, Text, StyleSheet, TextInput, ScrollView, SafeAreaView, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 
 
-export default class Cadastro extends React.Component{
-    constructor(props){
-        super(props);
-
-        this.state = {
-            nome:'',
-            cpf:'',
-            nascimento:'',
-            celular:'',
-            email:'',
-            senha:'',
-            confirmasenha:'',
-        }
-    }
-
-    alteraCampo(campos, value){
-        this.setState({
-            [campos]:value
-        });
-    }
-
-    login(){
-        console.log(this.state);
-    }
+export default function Cadastro(){
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [phone, setPhone] = useState('');
+    const [passwordCheck, setPasswordCheck] = useState('');
     
-    render(){
-        return(
-            <ScrollView>
-                <View style={styles.form}>
-                    <TextInput style={styles.input1} 
-                        placeholder="Nome Completo"
-                        value={this.state.nome}
-                        onChangeText={value => this.alteraCampo('nome',value)}
-                        />
-                    <TextInput style={styles.input}
-                        placeholder="CPF"
-                        value={this.state.cpf}
-                        onChangeText={value => this.alteraCampo('cpf',value)}
-                        />
-                    <TextInput style={styles.input} 
-                        placeholder="Data de Nascimento"
-                        value={this.state.nascimento}
-                        onChangeText={value => this.alteraCampo('nascimento',value)}
-                        />
-                    <TextInput style={styles.input}
-                        placeholder="Celular"
-                        value={this.state.celular}
-                        onChangeText={value => this.alteraCampo('celular',value)}
-                        />
-                    <TextInput style={styles.input}
-                        placeholder="Email"
-                        value={this.state.email}
-                        onChangeText={value => this.alteraCampo('email',value)}
-                        />
-                    <TextInput style={styles.input}
-                        placeholder="Senha"
-                        secureTextEntry
-                        value={this.state.senha}
-                        onChangeText={value => this.alteraCampo('senha',value)}
-                        />
-                    <TextInput style={styles.input}
-                        placeholder="Confirmar Senha"
-                        secureTextEntry
-                        value={this.state.confirmasenha}
-                        onChangeText={value => this.alteraCampo('confirmasenha',value)}
-                        />
-                </View>
-                <View style={styles.botao}>
-                    <Button title="Cadastrar" color="#00BFFF"  onPress={()=>this.login()}/>
-                </View>
-            </ScrollView>
-        )
+    async function registerSubmit(){
     }
+
+    return(
+        <SafeAreaView style={styles.container}>
+            <View style={styles.form}>
+                <TextInput style={styles.input1} 
+                    placeholder="Nome Completo"
+                    value={nome}
+                    onChangeText={setNome}
+                    />
+                <TextInput style={styles.input}
+                    placeholder="CPF"
+                    value={cpf}
+                    onChangeText={setCpf}
+                    />
+                <TextInput style={styles.input}
+                    placeholder="Celular"
+                    value={phone}
+                    onChangeText={setPhone}
+                    />
+                <TextInput style={styles.input}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    />
+                <TextInput style={styles.input}
+                    placeholder="Senha"
+                    secureTextEntry
+                    value={password}
+                    onChangeText={setPassword}
+                    />
+                <TextInput style={styles.input}
+                    placeholder="Confirmar Senha"
+                    secureTextEntry
+                    value={passwordCheck}
+                    onChangeText={setPasswordCheck}
+                    />                    
+            <TouchableOpacity style={styles.button} >
+                <Text style={styles.buttonText}>CADASTRAR</Text>
+            </TouchableOpacity>
+            </View>
+        </SafeAreaView>
+    )
     
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex:1,        
+        justifyContent:'center',
+        alignItems:'center'
+    },  
     form:{
-        paddingLeft:30,
-        paddingRight:30,
+        alignSelf: 'stretch',
+        paddingHorizontal: 30
+    },
+    button:{
+        marginTop:10,
+        height:40,
+        backgroundColor: '#00BFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius:2
+    },
+    buttonText:{
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16
     },
     input1:{
         height:50,

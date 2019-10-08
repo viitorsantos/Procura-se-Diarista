@@ -64,7 +64,7 @@ export default function Login({ navigation }){
             <Image style={styles.logo} source={logo} />
             <View style={styles.form}>
                 <TextInput 
-                    style={styles.input1}
+                    style={styles.email}
                     placeholder="E-Mail"
                     placeholderTextColor="#999"
                     keyboardType="email-address"
@@ -74,7 +74,7 @@ export default function Login({ navigation }){
                     onChangeText={setEmail}
                 />
                 <TextInput
-                    style={styles.input}
+                    style={styles.senha}
                     secureTextEntry
                     autoCapitalize="none"
                     placeholderTextColor="#999"
@@ -89,7 +89,7 @@ export default function Login({ navigation }){
                 <TouchableOpacity style={styles.button} onPress={loginSubmit}>
                     <Text style={styles.buttonText}>ENTRAR</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('Cadastro')}>
                     <Text style={styles.buttonText}>CADASTRAR-SE</Text>
                 </TouchableOpacity>
                 <Text style={styles.ou}>OU</Text>
@@ -153,12 +153,12 @@ export default function Login({ navigation }){
         alignSelf: 'stretch',
         paddingHorizontal:30
     },
-    input1:{
+    email:{
         height:50,
         borderBottomWidth:1,
         borderBottomColor:'#7B68EE'
     },
-    input:{
+    senha:{
         height:50,
         borderBottomWidth:1,
         borderBottomColor:'#7B68EE',
