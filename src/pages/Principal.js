@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-navigation';
 import { Container, Body, View, Text, Tab, Tabs, Icon, TabHeading, Content,
-Card, CardItem, Left, Thumbnail } from 'native-base';
+Card, CardItem, Left, Thumbnail , Header} from 'native-base';
 import { StyleSheet, Button, ScrollView, AsyncStorage } from 'react-native';
 
-
-//Dados
-const listaDiaristas = [
-    { id: 1, nome: 'Alice dos Santos', dia: '24/05/2019', hora:'09:00', endereco:'Rua Francisca de Oliveira, 116',
-     descricao:'Limpeza geral e passar as roupas',
-     foto: 'https://secure.gravatar.com/avatar/4a75e363796021a2bc2b9f805bacc2da?s=500&d=mm&r=g'},
-    { id: 2, nome: 'Mariazinha da Silva', dia: '26/05/2019', hora:'09:00', endereco:'Av Republica, 15',
-    descricao:'Limpeza geral',
-     foto: 'https://secure.gravatar.com/avatar/8834a7ccea235ca4cca9c970d95e27f3?s=500&d=mm&r=g'},
-  ];
-  
 import Solicitacao from '../components/Solicitacao';
 import Agendado from '../components/Agendado';
 import Concluido from '../components/Concluido';
-import Topo from '../components/Topo';
 
-export default function Principal(){    
+export default function Principal({ navigation }){    
     const [id, setId] = useState('');
     const [type, setType] = useState('');
     const [diarias, setDiarias] = useState([]);
@@ -61,17 +49,25 @@ export default function Principal(){
     })
     return (
         <SafeAreaView forceInset={{top: 'always'}} style={styles.container}>
-            <Topo/>
+            <Header style={styles.header} >
+                <Body>
+                    <Text style={styles.texto}>Agenda</Text>
+                </Body>
+                <Icon style={styles.icon} type="FontAwesome" name="user-o" 
+                onPress={() => navigation.navigate('Perfil') } />
+                <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
+                onPress={() => navigation.navigate('Login') } />
+            </Header>
             <View style={styles.container}>
                 <Tabs>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Solicitações</Text></TabHeading>}>
-                        <Solicitacao solicitado={listaDiaristas}/>
+                        <Solicitacao solicitado={diarias}/>
                     </Tab>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Agendado</Text></TabHeading>}>
-                        <Agendado agendado={listaDiaristas}/>
+                        <Agendado agendado={diarias}/>
                     </Tab>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Concluídos</Text></TabHeading>}>
-                        <Concluido concluido={listaDiaristas}/>
+                        <Concluido concluido={diarias}/>
                     </Tab>
                 </Tabs>
             </View>
