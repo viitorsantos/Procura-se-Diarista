@@ -3,15 +3,11 @@ import { View, TouchableOpacity, Text, StyleSheet, Image, AsyncStorage} from 're
 
 import logo from '../assets/logo.png';
 
-export default function Home( {navigation} ){
+export default function Home( {navigation } ){
     useEffect(() => {
         AsyncStorage.getItem('user').then(user => {
             if(user){
-                if(user.Type == 1){
-                    navigation.navigate('DiaristaPrincipal');
-                }else{
-                    navigation.navigate('ClientePrincipal');
-                }                
+                navigation.navigate('Principal');
             }
         })
     }, []);

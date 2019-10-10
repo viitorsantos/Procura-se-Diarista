@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-navigation';
-import { Container, Header, Body, View, Text, Tab, Tabs, Icon, TabHeading, Content,
+import { Container, Body, View, Text, Tab, Tabs, Icon, TabHeading, Content,
 Card, CardItem, Left, Thumbnail } from 'native-base';
 import { StyleSheet, Button, ScrollView, AsyncStorage } from 'react-native';
 
@@ -15,19 +15,25 @@ const listaDiaristas = [
      foto: 'https://secure.gravatar.com/avatar/8834a7ccea235ca4cca9c970d95e27f3?s=500&d=mm&r=g'},
   ];
   
-import Solicitacao from '../components/ClienteListItens/Solicitacao';
-import Agendado from '../components/ClienteListItens/Agendado';
-import Concluido from '../components/ClienteListItens/Concluido';
+import Solicitacao from '../components/Solicitacao';
+import Agendado from '../components/Agendado';
+import Concluido from '../components/Concluido';
+import Topo from '../components/Topo';
 
-export default function ClientePrincipal(){    
+export default function Principal(){    
     const [id, setId] = useState('');
+    const [type, setType] = useState('');
     const [diarias, setDiarias] = useState([]);
+
     useEffect(() => {
         async function loadDiarias(){
             await AsyncStorage.getItem('user').then(user => {
                 setId(user.Id);
+                setType(user.Type);
             })
-            var result = await fetch(baseUrl + 'api/service/ListServiceCli/' + id, {
+
+            var apiUrl = type == 2 ? 'api/service/ListServiceCli/' : 'api/service/ListServiceDia';
+            var result = await fetch(baseUrl + apiUrl + id, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -35,12 +41,12 @@ export default function ClientePrincipal(){
                 }
             })
             .then(response=> {
-                if (response.status != 400) {
+                if (response.status == 200) {
                     return response.json();
                 }else{
                     Alert.alert(
                         'Erro ao buscar diarias',
-                        'E-mail ou senha invalidos',
+                        'Verifique sua conexão e tente novamente',
                         [
                             {text: 'OK'},
                         ],
@@ -55,17 +61,7 @@ export default function ClientePrincipal(){
     })
     return (
         <SafeAreaView forceInset={{top: 'always'}} style={styles.container}>
-            <Header style={styles.header} >
-                <Body>
-                    <Text style={styles.texto}>Agenda</Text>
-                </Body>
-                <Icon style={styles.icon3} type="Feather" name="plus-circle" 
-                onPress={() => this.props.navigation.navigate('SolicitaLimpeza') } />
-                <Icon style={styles.icon} type="FontAwesome" name="user-o" 
-                onPress={() => this.props.navigation.navigate('PerfilCliente') } />
-                <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
-                onPress={() => this.props.navigation.navigate('Login') } />
-            </Header>
+            <Topo/>
             <View style={styles.container}>
                 <Tabs>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Solicitações</Text></TabHeading>}>
@@ -98,6 +94,7 @@ const styles = StyleSheet.create({
     },
     texto: {
         fontSize:20,
+        fontWeight: 'bold',
         color:'white',
         marginLeft:30,
     },

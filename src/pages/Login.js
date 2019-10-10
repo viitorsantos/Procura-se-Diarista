@@ -12,13 +12,9 @@ export default function Login({ navigation }){
     useEffect(() => {
         AsyncStorage.getItem('user').then(user => {
             if(user){
-                if(user.Type == 1){
-                    navigation.navigate('ClientePrincipal');
-                }else{
-                    navigation.navigate('DiaristaPrincipal');
-                }                
+                navigation.navigate('Principal');
             }
-        })
+        });
     }, []);
 
     async function loginSubmit(){
@@ -36,8 +32,9 @@ export default function Login({ navigation }){
             body: authentication
         })
         .then(response=> {
-            if (response.status != 400) {
+            if (response.status == 200) {
                 return response.json();
+                console.log()
             }else{
                 Alert.alert(
                     'Erro logar',
@@ -53,11 +50,8 @@ export default function Login({ navigation }){
 
         await AsyncStorage.setItem('user', JSON.stringify(result));
 
-        if(result.Type == 1){
-            navigation.navigate('DiaristaPrincipal');
-        }else{
-            navigation.navigate('ClientePrincipal');
-        }
+        navigation.navigate('Principal');
+
     };
 
     return (
@@ -102,7 +96,7 @@ export default function Login({ navigation }){
     );
 }
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container:{
         flex:1,
         justifyContent:'center',

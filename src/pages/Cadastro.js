@@ -20,7 +20,7 @@ export default function Cadastro({navigation}){
             || cpf == ""
             || phone == ""){
             Alert.alert(
-                'Erro conectar',
+                'Erro ao cadastrar',
                 'Dados não foram preenchidos corretamente',
                 [
                   {text: 'OK'},

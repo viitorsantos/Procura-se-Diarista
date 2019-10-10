@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
 import CadastroEnderecos from './pages/CadastroEnderecos';
-import ClientePrincipal from './pages/ClientePrincipal';
+import Principal from './pages/Principal';
 import PerfilCliente from './pages/PerfilCliente';
 import PerfilDiarista from './pages/PerfilDiarista';
 import SolicitaLimpeza from './pages/SolicitaLimpeza';
@@ -19,7 +19,7 @@ const Routes = createAppContainer(
         Login,
         Cadastro,
         CadastroEnderecos,
-        ClientePrincipal,
+        Principal,
         PerfilCliente,
         PerfilDiarista,
         SolicitaLimpeza,

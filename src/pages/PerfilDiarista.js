@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, AsyncStorage} from 'react-native';
 import { Body, Content, Card, CardItem, Left, Thumbnail, Icon } from 'native-base';
 
 
@@ -12,7 +12,7 @@ const descricao = [
   { id: 1, descricao: 'texto texto texto texto texto texto texto texto texto texto texto texto texto'},
 ];
 
-export default class PerfilCliente extends React.Component{
+export default class PerfilCliente extends React.Component{   
   render() {
     return (
     <ScrollView>
