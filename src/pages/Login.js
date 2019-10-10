@@ -8,6 +8,7 @@ export default function Login({ navigation }){
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
+    var tp = navigation.state.params.type != undefined && navigation.state.params.type != null && navigation.state.params.type != "" ? navigation.state.params.type : 0;
     useEffect(() => {
         AsyncStorage.getItem('user').then(user => {
             if(user){
@@ -35,14 +36,14 @@ export default function Login({ navigation }){
             body: authentication
         })
         .then(response=> {
-            if (response.ok) {
+            if (response.status != 400) {
                 return response.json();
             }else{
                 Alert.alert(
-                    'Erro conectar',
+                    'Erro logar',
                     'E-mail ou senha invalidos',
                     [
-                      {text: 'OK'},
+                        {text: 'OK'},
                     ],
                 );
             }
@@ -89,7 +90,7 @@ export default function Login({ navigation }){
                 <TouchableOpacity style={styles.button} onPress={loginSubmit}>
                     <Text style={styles.buttonText}>ENTRAR</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('Cadastro')}>
+                <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('Cadastro', { type: tp })}>
                     <Text style={styles.buttonText}>CADASTRAR-SE</Text>
                 </TouchableOpacity>
                 <Text style={styles.ou}>OU</Text>
@@ -98,31 +99,6 @@ export default function Login({ navigation }){
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
-        
-        /*<View>
-            <View style={styles.form}>
-                <TextInput style={styles.input1} placeholder="Email"/>
-                <TextInput style={styles.input}
-                    secureTextEntry
-                placeholder="Senha"/>
-                <TouchableOpacity onPress={this._handleHelpPress}>
-                    <Text style={styles.helpLinkText}>Esqueceu sua senha? </Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.botao}>
-                <Button title="Entrar" color="#00BFFF" 
-                onPress={() => this.props.navigation.navigate(tipologin) }/>
-            </View>
-            <View style={styles.botao}>
-                <Button title="Cadastrar" color="#00BFFF" 
-                onPress={() => this.props.navigation.navigate('Cadastro') }/>
-            </View>
-            <Text style={styles.ou}>OU</Text>
-            <View style={styles.botao}>
-                <Button title="Entrar com Facebook" color="#00BFFF" 
-                onPress={() => navigation.navigate('') }/>
-            </View>
-        </View>*/
     );
 }
 

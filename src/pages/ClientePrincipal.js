@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-navigation';
 import { Container, Header, Body, View, Text, Tab, Tabs, Icon, TabHeading, Content,
 Card, CardItem, Left, Thumbnail } from 'native-base';
-import { StyleSheet, Button, ScrollView } from 'react-native';
+import { StyleSheet, Button, ScrollView, AsyncStorage } from 'react-native';
 
 
 //Dados
@@ -15,69 +15,44 @@ const listaDiaristas = [
      foto: 'https://secure.gravatar.com/avatar/8834a7ccea235ca4cca9c970d95e27f3?s=500&d=mm&r=g'},
   ];
   
-
-import ListaDiariasCliente from '../components/ListaDiariasCliente';
 import Solicitacao from '../components/ClienteListItens/Solicitacao';
 import Agendado from '../components/ClienteListItens/Agendado';
 import Concluido from '../components/ClienteListItens/Concluido';
 
-export default function ClientePrincipal(){
-    
-      /*  const Agendado = ({ agendado }) => (
-            <ScrollView>
-            <Content>
-                {listaDiaristas.map(lista => (
-                <Card key={lista.id}>
-                    <CardItem style={styles.carditem}>
-                    <Left>
-                        <Thumbnail source={{ uri: lista.foto}} />
-                        <Body style={styles.body}>
-                        <Text>{lista.nome}</Text>
-                        <Text note>Dia {lista.dia} às {lista.hora}h</Text>
-                        <Text note>{lista.endereco}</Text>
-                        <Text style={styles.textodescricao}>{lista.descricao}</Text>
-                        </Body>
-                    </Left>
-                    </CardItem>
-                    <View style={styles.status}>
-                        <Text note style={styles.cancelar}>CANCELAR</Text>
-                        <Text note style={styles.agendado}>AGENDADO</Text>
-                    </View>
-                </Card>))}
-            </Content>
-            </ScrollView>
-        );
-        const Concluido = ({ concluido }) => (
-            <ScrollView>
-            <Content>
-                {listaDiaristas.map(lista => (
-                <Card key={lista.id}>
-                    <CardItem style={styles.carditem}>
-                    <Left>
-                        <Thumbnail source={{ uri: lista.foto}} />
-                        <Body style={styles.body}>
-                        <Text>{lista.nome}</Text>
-                        <Text note>Dia {lista.dia} às {lista.hora}h</Text>
-                        <Text note>{lista.endereco}</Text>
-                        <Text style={styles.textodescricao}>{lista.descricao}</Text>
-                        </Body>
-                    </Left>
-                    </CardItem>
-                    <View style={styles.status}>
-                        <Text note style={styles.cancelar}>AVALIE O SERVIÇO</Text>
-                    </View>
-                </Card>))}
-            </Content>
-            </ScrollView>
+export default function ClientePrincipal(){    
+    const [id, setId] = useState('');
+    const [diarias, setDiarias] = useState([]);
+    useEffect(() => {
+        async function loadDiarias(){
+            await AsyncStorage.getItem('user').then(user => {
+                setId(user.Id);
+            })
+            var result = await fetch(baseUrl + 'api/service/ListServiceCli/' + id, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response=> {
+                if (response.status != 400) {
+                    return response.json();
+                }else{
+                    Alert.alert(
+                        'Erro ao buscar diarias',
+                        'E-mail ou senha invalidos',
+                        [
+                            {text: 'OK'},
+                        ],
+                    );
+                }
+            })
+            .then(resposta => { return resposta; })
+            .catch((error) => { console.error(error); });
 
-            
-                    <Tab heading={<TabHeading style={styles.menu} ><Text>Agendado</Text></TabHeading>}>
-                        <Agendado agendado={listaDiaristas}/>
-                    </Tab>
-                    <Tab heading={<TabHeading style={styles.menu} ><Text>Concluídos</Text></TabHeading>}>
-                        <Concluido concluido={listaDiaristas}/>
-                    </Tab>
-        );*/
+            setDiarias(result);
+        }
+    })
     return (
         <SafeAreaView forceInset={{top: 'always'}} style={styles.container}>
             <Header style={styles.header} >
@@ -94,7 +69,7 @@ export default function ClientePrincipal(){
             <View style={styles.container}>
                 <Tabs>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Solicitações</Text></TabHeading>}>
-                        <Solicitacao />
+                        <Solicitacao solicitado={listaDiaristas}/>
                     </Tab>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Agendado</Text></TabHeading>}>
                         <Agendado agendado={listaDiaristas}/>

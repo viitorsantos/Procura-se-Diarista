@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Button, Text, StyleSheet, TextInput, ScrollView, SafeAreaView, TouchableOpacity} from 'react-native';
-import axios from 'axios';
+import { View, KeyboardAvoidingView, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Alert} from 'react-native';
+import { SafeAreaView } from 'react-navigation';
 
+import baseUrl from '../services/api';
 
-export default function Cadastro(){
+export default function Cadastro({navigation}){
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,28 +13,97 @@ export default function Cadastro(){
     const [passwordCheck, setPasswordCheck] = useState('');
     
     async function registerSubmit(){
+        if(password != passwordCheck 
+            || password == ""
+            || nome == ""
+            || email == ""
+            || cpf == ""
+            || phone == ""){
+            Alert.alert(
+                'Erro conectar',
+                'Dados não foram preenchidos corretamente',
+                [
+                  {text: 'OK'},
+                ],
+            );
+            return;
+        }else{
+            let register = JSON.stringify({
+                Name : nome,
+                CPF : cpf,
+                Email : email,
+                Password : password,
+                Phone : phone,
+                Type : navigation.state.params.type
+            });
+
+            var result = await fetch(baseUrl + 'api/user/Create', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: register
+            })            
+            .then(response=> {
+                console.log(response, register);
+                if (response.status == 200) {
+                    return response.json();
+                }else{
+                    Alert.alert(
+                        'Erro ao cadastrar',
+                        'Existem dados inválidos',
+                        [
+                            {text: 'OK'},
+                        ],
+                    );
+                }
+            })                       
+            .then(resposta => { return resposta; })
+            .catch((error) => { console.error(error); });
+
+            console.log(result);
+            Alert.alert(
+                'Usuário Cadastrado',
+                'Sua conta foi cadastrada com sucesso',
+                [
+                    {text: 'OK', onPress: () => navigation.navigate('Login', { type : 2 })},
+                ],
+            );
+        }
     }
 
     return(
-        <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>            
+            <SafeAreaView forceInset={{top: 'always'}} style={styles.title}>
+                <Text style={styles.titleText}>CADASTRAR-SE</Text>
+            </SafeAreaView>
             <View style={styles.form}>
                 <TextInput style={styles.input1} 
                     placeholder="Nome Completo"
                     value={nome}
+                    autoCapitalize="words"
                     onChangeText={setNome}
                     />
                 <TextInput style={styles.input}
                     placeholder="CPF"
                     value={cpf}
+                    keyboardType="numeric"
                     onChangeText={setCpf}
                     />
                 <TextInput style={styles.input}
                     placeholder="Celular"
+                    textContentType="telephoneNumber"
+                    keyboardType="phone-pad"
                     value={phone}
                     onChangeText={setPhone}
                     />
                 <TextInput style={styles.input}
                     placeholder="Email"
+                    textContentType="emailAddress"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     value={email}
                     onChangeText={setEmail}
                     />
@@ -49,23 +119,32 @@ export default function Cadastro(){
                     value={passwordCheck}
                     onChangeText={setPasswordCheck}
                     />                    
-            <TouchableOpacity style={styles.button} >
-                <Text style={styles.buttonText}>CADASTRAR</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={registerSubmit}>
+                    <Text style={styles.buttonText}>CADASTRAR</Text>
+                </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </KeyboardAvoidingView>
     )
     
 }
 
 const styles = StyleSheet.create({
+    title:{
+        marginBottom: 20
+    },
+    titleText: {
+        color:'#00BFFF',
+        fontSize:16,
+        fontWeight:'bold'
+    },  
     container:{
         flex:1,        
-        justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent: 'center'
     },  
     form:{
         alignSelf: 'stretch',
+        justifyContent: 'center',
         paddingHorizontal: 30
     },
     button:{
@@ -92,6 +171,7 @@ const styles = StyleSheet.create({
         borderBottomWidth:2,
         borderBottomColor:'#7B68EE',
         marginTop:10,
+        marginBottom:10
     },
     botao: {
         marginTop:15,
