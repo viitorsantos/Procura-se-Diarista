@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, KeyboardAvoidingView, Button, Text, StyleSheet,TextInput,TouchableOpacity, Image, Alert, AsyncStorage } from 'react-native';
+import { View, KeyboardAvoidingView, Button, Text, StyleSheet,TextInput,TouchableOpacity, Image, Alert, AsyncStorage, ActivityIndicator } from 'react-native';
+import Moment from 'moment';
 
-import baseUrl from '../services/api';
 import logo from '../assets/logo.png';
 
 export default function Login({ navigation }){    
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [loading, setLoading] = useState(false);
 
     var tp = navigation.state.params.type != undefined && navigation.state.params.type != null && navigation.state.params.type != "" ? navigation.state.params.type : 0;
     useEffect(() => {
@@ -18,12 +19,13 @@ export default function Login({ navigation }){
     }, []);
 
     async function loginSubmit(){
+        setLoading(true);
         let authentication = JSON.stringify({
             Email :email,
             Password :senha
         });
 
-        var result = await fetch(baseUrl + 'api/authentication/login', {
+        let result = await fetch('https://procurasediarista-api.azurewebsites.net/api/authentication/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -34,7 +36,6 @@ export default function Login({ navigation }){
         .then(response=> {
             if (response.status == 200) {
                 return response.json();
-                console.log()
             }else{
                 Alert.alert(
                     'Erro logar',
@@ -43,57 +44,63 @@ export default function Login({ navigation }){
                         {text: 'OK'},
                     ],
                 );
+                setLoading(false);
             }
         })
         .then(resposta => { return resposta; })
         .catch((error) => { console.error(error); });
 
-        await AsyncStorage.setItem('user', JSON.stringify(result));
-
-        navigation.navigate('Principal');
+        await AsyncStorage.setItem('user', JSON.stringify(result));        
+        navigation.navigate('Principal');        
 
     };
-
-    return (
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <Image style={styles.logo} source={logo} />
-            <View style={styles.form}>
-                <TextInput 
-                    style={styles.email}
-                    placeholder="E-Mail"
-                    placeholderTextColor="#999"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    value={email}
-                    onChangeText={setEmail}
-                />
-                <TextInput
-                    style={styles.senha}
-                    secureTextEntry
-                    autoCapitalize="none"
-                    placeholderTextColor="#999"
-                    autoCorrect={false}
-                    placeholder="Senha"
-                    value={senha}
-                    onChangeText={setSenha}
-                />
-                <TouchableOpacity onPress={this._handleHelpPress}>
-                    <Text style={styles.helpLinkText}>Esqueceu sua senha? </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={loginSubmit}>
-                    <Text style={styles.buttonText}>ENTRAR</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('Cadastro', { type: tp })}>
-                    <Text style={styles.buttonText}>CADASTRAR-SE</Text>
-                </TouchableOpacity>
-                <Text style={styles.ou}>OU</Text>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>ENTRAR COM FACEBOOK</Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
-    );
+    if(!loading)
+    {
+        return (
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>                            
+                <Image style={styles.logo} source={logo} />
+                <View style={styles.form}>
+                    <TextInput 
+                        style={styles.email}
+                        placeholder="E-Mail"
+                        placeholderTextColor="#999"
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        value={email}
+                        onChangeText={setEmail}
+                    />
+                    <TextInput
+                        style={styles.senha}
+                        secureTextEntry
+                        autoCapitalize="none"
+                        placeholderTextColor="#999"
+                        autoCorrect={false}
+                        placeholder="Senha"
+                        value={senha}
+                        onChangeText={setSenha}
+                    />
+                    <TouchableOpacity onPress={this._handleHelpPress}>
+                        <Text style={styles.helpLinkText}>Esqueceu sua senha? </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={loginSubmit}>
+                        <Text style={styles.buttonText}>ENTRAR</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('Cadastro', { type: tp })}>
+                        <Text style={styles.buttonText}>CADASTRAR-SE</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.ou}>OU</Text>
+                    <TouchableOpacity style={styles.button}>
+                        <Text style={styles.buttonText}>ENTRAR COM FACEBOOK</Text>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAvoidingView>
+        );
+    }else{
+        return(
+            <ActivityIndicator style={styles.container} size="large" color="#00BFFF"/>
+        );
+    }
 }
 
 const styles = StyleSheet.create({

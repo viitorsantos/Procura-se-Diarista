@@ -20,16 +20,6 @@ import {
 
 import avatar from "../assets/icon-avatar.png";
 
-const perfil = [
-  {
-    id: 1,
-    nome: "Alice dos Santos",
-    telefone: "14-996439992",
-    email: "diarista@hotmail.com",
-    foto:
-      "https://secure.gravatar.com/avatar/4a75e363796021a2bc2b9f805bacc2da?s=500&d=mm&r=g"
-  }
-];
 
 const enderecos = [
   {
@@ -50,68 +40,54 @@ const enderecos = [
   }
 ];
 
-export default function Perfil() {
-    const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
+export default function Perfil( { navigation } ) {
+    const [user, setUser] = useState({});
 
     useEffect(() => {
-        async function loadPerfil() {
-            AsyncStorage.getItem("user").then(user => {
-                setNome(user.Name);
-                setPhone(user.Phone);
-                setEmail(user.Email);
-                console.log(user);
-            });
-        }
+        AsyncStorage.getItem("user").then(user => {
+            setUser(JSON.parse(user));
+        });
     }, []);
-
   return (
     <SafeAreaView forceInset={{ top: "always" }}>
         <ScrollView>
             <Content>
-                {perfil.map(lista => (
-                    <Card key={lista.id}>
+                <Card>
                     <CardItem>
                         <Left>
                             <Image style={styles.foto} source={avatar} />
                             <Body>
-                                <Text style={styles.nome}>{nome}</Text>
-                                <Text style={styles.texto}>{phone}</Text>
-                                <Text style={styles.texto}>{email}</Text>
+                                <Text style={styles.nome}>{user.Name}</Text>
+                                <Text style={styles.texto}>{user.Phone}</Text>
+                                <Text style={styles.texto}>{user.Email}</Text>
                             </Body>
                         </Left>
                     </CardItem>
-                    </Card>
-                ))}
-                </Content>
-                <View>
-                    <Text style={styles.endereco}>Meus Endereços</Text>
-                    <Icon
-                        style={styles.icon}
-                        type="Feather"
-                        name="plus-circle"
-                        onPress={() => this.props.navigation.navigate("CadastroEnderecos")}
-                    />
-                    </View>
-                <Content>
-                {enderecos.map(lista2 => (
-                    <Card key={lista2.id}>
-                        <CardItem style={styles.carditem}>
-                            <Left>
-                                <Body>
-                                    <Text style={styles.texto}>{lista2.tipo}</Text>
-                                    <Text style={styles.texto}>
-                                    {lista2.rua},{lista2.numero}
-                                    </Text>
-                                    <Text style={styles.texto}>
-                                    {lista2.bairro} {lista2.cidade}
-                                    </Text>
-                                </Body>
-                            </Left>
-                        </CardItem>
-                    </Card>
-                ))}
+                </Card>
+            </Content>
+            <View>
+                <Text style={styles.endereco}>Meus Endereços</Text>
+                <Icon
+                    style={styles.icon}
+                    type="Feather"
+                    name="plus-circle"
+                    onPress={() => this.props.navigation.navigate("CadastroEnderecos")}
+                />
+            </View>
+            <Content>
+                <Card>
+                    <CardItem style={styles.carditem}>
+                        <Left>
+                            <Body>
+                                <Text style={styles.texto}></Text>
+                                <Text style={styles.texto}>
+                                </Text>
+                                <Text style={styles.texto}>
+                                </Text>
+                            </Body>
+                        </Left>
+                    </CardItem>
+                </Card>
             </Content>
         </ScrollView>
     </SafeAreaView>

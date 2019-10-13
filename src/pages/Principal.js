@@ -1,52 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-navigation';
 import { Container, Body, View, Text, Tab, Tabs, Icon, TabHeading, Content,
 Card, CardItem, Left, Thumbnail , Header} from 'native-base';
-import { StyleSheet, Button, ScrollView, AsyncStorage } from 'react-native';
+import { StyleSheet, Button, ScrollView, AsyncStorage, Alert } from 'react-native';
 
-import Solicitacao from '../components/Solicitacao';
 import Agendado from '../components/Agendado';
 import Concluido from '../components/Concluido';
+import Solicitacao from '../components/Solicitacao';
 
 export default function Principal({ navigation }){    
-    const [id, setId] = useState('');
-    const [type, setType] = useState('');
-    const [diarias, setDiarias] = useState([]);
 
-    useEffect(() => {
-        async function loadDiarias(){
-            await AsyncStorage.getItem('user').then(user => {
-                setId(user.Id);
-                setType(user.Type);
-            })
-
-            var apiUrl = type == 2 ? 'api/service/ListServiceCli/' : 'api/service/ListServiceDia';
-            var result = await fetch(baseUrl + apiUrl + id, {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response=> {
-                if (response.status == 200) {
-                    return response.json();
-                }else{
-                    Alert.alert(
-                        'Erro ao buscar diarias',
-                        'Verifique sua conexão e tente novamente',
-                        [
-                            {text: 'OK'},
-                        ],
-                    );
-                }
-            })
-            .then(resposta => { return resposta; })
-            .catch((error) => { console.error(error); });
-
-            setDiarias(result);
-        }
-    })
     return (
         <SafeAreaView forceInset={{top: 'always'}} style={styles.container}>
             <Header style={styles.header} >
@@ -61,13 +24,13 @@ export default function Principal({ navigation }){
             <View style={styles.container}>
                 <Tabs>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Solicitações</Text></TabHeading>}>
-                        <Solicitacao solicitado={diarias}/>
+                        <Solicitacao navigation={navigation}/>
                     </Tab>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Agendado</Text></TabHeading>}>
-                        <Agendado agendado={diarias}/>
+                        <Agendado navigation={navigation}/>
                     </Tab>
                     <Tab heading={<TabHeading style={styles.menu} ><Text>Concluídos</Text></TabHeading>}>
-                        <Concluido concluido={diarias}/>
+                        <Concluido navigation={navigation}/>
                     </Tab>
                 </Tabs>
             </View>
@@ -76,6 +39,16 @@ export default function Principal({ navigation }){
 }
 
 const styles = StyleSheet.create({
+    solicitacao: {
+        fontSize:15,
+        marginTop:70,
+        textAlign:'center',
+    },
+    solicitacaoView:{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     agenda:{
 
     },

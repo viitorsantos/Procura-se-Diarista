@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
-import baseUrl from '../services/api';
-
 export default function Cadastro({navigation}){
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
@@ -37,7 +35,7 @@ export default function Cadastro({navigation}){
                 Type : navigation.state.params.type
             });
 
-            var result = await fetch(baseUrl + 'api/user/Create', {
+            var result = await fetch('https://procurasediarista-api.azurewebsites.net/api/user/Create', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
