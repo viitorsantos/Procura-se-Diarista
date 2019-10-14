@@ -6,11 +6,9 @@ import Cadastro from './pages/Cadastro';
 import CadastroEnderecos from './pages/CadastroEnderecos';
 import Principal from './pages/Principal';
 import Perfil from './pages/Perfil';
-import PerfilDiarista from './pages/PerfilDiarista';
 import SolicitaLimpeza from './pages/SolicitaLimpeza';
+import ConfirmaCasa from './pages/ConfirmaCasa';
 import ConfirmaLimpeza from './pages/ConfirmaLimpeza';
-import DiaristaPrincipal from './pages/DiaristaPrincipal';
-import ConfirmacaoLimpeza from './pages/ConfirmacaoLimpeza';
 import LimpezaConfirmada from './pages/LimpezaConfirmada';
 
 const Routes = createAppContainer(
@@ -21,11 +19,9 @@ const Routes = createAppContainer(
         CadastroEnderecos,
         Principal,
         Perfil,
-        PerfilDiarista,
         SolicitaLimpeza,
+        ConfirmaCasa,
         ConfirmaLimpeza,
-        DiaristaPrincipal,
-        ConfirmacaoLimpeza,
         LimpezaConfirmada
     })
 )

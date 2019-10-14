@@ -9,6 +9,10 @@ import Concluido from '../components/Concluido';
 import Solicitacao from '../components/Solicitacao';
 
 export default function Principal({ navigation }){    
+    async function clearStorage(){
+        await AsyncStorage.clear();
+        navigation.navigate('Home');
+    }
 
     return (
         <SafeAreaView forceInset={{top: 'always'}} style={styles.container}>
@@ -16,10 +20,10 @@ export default function Principal({ navigation }){
                 <Body>
                     <Text style={styles.texto}>Agenda</Text>
                 </Body>
-                <Icon style={styles.icon} type="FontAwesome" name="user-o" 
+                <Icon style={styles.icon} type="MaterialIcons" name="account-circle" 
                 onPress={() => navigation.navigate('Perfil') } />
-                <Icon style={styles.icon2} type="Entypo" name="dots-three-vertical"
-                onPress={() => navigation.navigate('Login') } />
+                <Icon style={styles.icon2} type="MaterialIcons" name="close"
+                onPress={clearStorage} />
             </Header>
             <View style={styles.container}>
                 <Tabs>

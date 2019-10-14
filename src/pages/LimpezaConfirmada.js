@@ -1,29 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { SafeAreaView } from 'react-navigation';
 import { StyleSheet, Button} from 'react-native';
 import {Text, Content, Icon, View } from 'native-base';
 
+export default function LimpezaConfirmada({navigation}){
+    useEffect(() => {
+        setTimeout(() =>{
+            navigation.navigate('Principal');
+        }, 2000);
+    }, []);
 
-const LimpezaConfirmada = ({ navigation }) => (
-    <Content>
-        <View style={styles.view}>
-            <Icon style={styles.icon} type="AntDesign" name="checkcircleo" />
+    return(        
+        <SafeAreaView forceInset={{top: 'always'}} style={{flex:1, alignItems:'center', justifyContent: 'center'}}>
+            <Icon style={styles.icon} type="MaterialIcons" name="done" />
             <Text style={styles.texto} >Diária agendada com sucesso!</Text>
-        </View>
-        
-        <View style={styles.botao}>
-            <Button title="Voltar para Agenda" color="#00BFFF" onPress={() => navigation.navigate('Entrar') }/>
-         </View>
-    </Content>
-);
+        </SafeAreaView>
+    );
+}
 
 const styles = StyleSheet.create({
     icon:{
         color:'#00FA9A',
-        flexGrow:1,
         textAlign:'center',
+        fontSize:100
     },
-    view:{
-        marginTop:250,
+    view:{        
+        flex:1,        
+        alignItems:'center',
+        justifyContent: 'center'
     },
     texto:{
         textAlign:"center",
@@ -34,6 +38,4 @@ const styles = StyleSheet.create({
         marginTop:10,
         marginLeft:31,
     },
-  });
-
-export default LimpezaConfirmada;
+});

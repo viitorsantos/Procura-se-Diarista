@@ -1,12 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import { Container, Header, Body, View, Text, Content, Card, CardItem, Left, Thumbnail, Right } from 'native-base';
-import { TouchableOpacity, ScrollView, StyleSheet, AsyncStorage, Image } from 'react-native';
+import { Container, Header, Body, View, Text, Content, Card, CardItem, Left, Thumbnail, Right, Icon } from 'native-base';
+import { TouchableOpacity, ScrollView, StyleSheet, AsyncStorage, Image, KeyboardAvoidingView, FlatList } from 'react-native';
+import Moment from 'moment';
 
-import limpeza from "../assets/limpeza.png";
+import limpeza from "../assets/thumb.jpg";
+import casa from "../assets/casa.jpg";
+import limpeza2 from "../assets/diana-pessoa.jpg";
 
 export default function Agendado({navigation}) {
     const [diarias, setDiarias] = useState([]);
-    const [type, setType] = useState('');
+    const [type, setType] = useState('');    
+    const [loading, setLoading] = useState(false);
 
     async function cancelService(id){
         await fetch('https://procurasediarista-api.azurewebsites.net/api/service/cancelar/'+id, { 
@@ -31,8 +35,10 @@ export default function Agendado({navigation}) {
         });
     }
 
-    async function loadDiarias(){    
-        var user = JSON.parse(await AsyncStorage.getItem("user"));            
+    async function loadDiarias(){                  
+        setLoading(true);       
+        var user = JSON.parse(await AsyncStorage.getItem("user"));     
+        setType(user.Type);    
         var z = "";
         if(user.Type == 2){
             z = 'api/service/ListServiceCliAge/';
@@ -61,7 +67,8 @@ export default function Agendado({navigation}) {
         })
         .then(resposta => { return resposta; })
         .catch((error) => { console.error(error); });
-        setDiarias(result);
+        setDiarias(result);        
+        setLoading(false);
     }
 
     useEffect(() => {          
@@ -69,11 +76,15 @@ export default function Agendado({navigation}) {
     }, []);
 
     if(type == 2){
-        if(diarias.length > 0){            
+        if(diarias.length > 0 || loading){            
             return (
-                <ScrollView>
-                    <Content>
-                    {diarias.map(item => (
+                <KeyboardAvoidingView style={{flex: 1}}>
+                    <FlatList
+                    data={diarias}
+                    keyExtractor={diaria => String(diaria.Id)}
+                    onRefresh={loadDiarias}
+                    refreshing={loading}
+                    renderItem={({ item })=> (
                         <Card key={item.Id}>
                             <CardItem style={styles.carditem}>
                                 <Left>
@@ -89,49 +100,66 @@ export default function Agendado({navigation}) {
                                         <Text style={styles.cancelar}>CANCELAR</Text>
                                     </TouchableOpacity>                            
                                 </Right>
+                            </CardItem>                            
+                            <CardItem cardBody>
+                                <Image source={casa} style={{height: 300, width: null, flex: 1}}/>
                             </CardItem>                    
-                        </Card>))}
-                    </Content>
-                </ScrollView>
+                        </Card>
+                        )}
+                    />
+                    <TouchableOpacity style={styles.positionButton}>
+                        <Icon style={styles.icon3} type="MaterialIcons" name="add-circle" 
+                            onPress={() => navigation.navigate('SolicitaLimpeza')} />
+                    </TouchableOpacity>             
+                </KeyboardAvoidingView>
             );
         }else{  
-            return(          
-                <ScrollView>
+            return( 
+                <KeyboardAvoidingView style={{flex: 1}}>
                     <View style={styles.solicitacaoView}>
-                        <Text style={styles.solicitacao}>Você ainda não possui diárias solicitadas.</Text>
-                        <Text style={styles.solicitacao}>Agende uma diária agora mesmo clicando aqui</Text>                    
-                        <Icon style={styles.icon3} type="Feather" name="plus-circle" 
-                        onPress={() => navigation.navigate('SolicitaLimpeza')} />
+                        <Text style={styles.solicitacao}>Você não possui nenhuma diária agendada.</Text>
+                        <Text style={styles.solicitacao}>Solicite uma agora mesmo.</Text>
+                    </View>                
+                    <View>
+                        <TouchableOpacity style={styles.positionButton}>
+                            <Icon style={styles.icon3} type="MaterialIcons" name="add-circle" 
+                                onPress={() => navigation.navigate('SolicitaLimpeza')} />
+                        </TouchableOpacity>             
                     </View>
-                </ScrollView>
+                </KeyboardAvoidingView>   
             );
         }
-    }
-    else{
-        if(diarias.length > 0){                         
+    }else{
+        if(diarias.length > 0 || loading){                         
             return (
-                <ScrollView>
-                    <Content>
-                    {diarias.map(item => (
-                        <Card key={item.Id}>
-                            <CardItem style={styles.carditem}>
-                                <Left>
-                                    <Image style={styles.foto} source={limpeza}/>
-                                    <Body style={styles.body}>
-                                        <Text>{item.Description}</Text>
-                                        <Text>{Moment(item.DataServico).locale('pt-br').format('L')}</Text>
-                                        <Text>{item.Residence.Rua}, {item.Residence.Number}</Text>
-                                    </Body>
-                                </Left>
-                                <Right>
-                                    <TouchableOpacity onPress={() => cancelService(item.Id) }>
-                                        <Text style={styles.cancelar}>CANCELAR</Text>
-                                    </TouchableOpacity>                            
-                                </Right>
-                            </CardItem>                    
-                        </Card>))}
-                    </Content>
-                </ScrollView>
+                <FlatList
+                data={diarias}
+                keyExtractor={diaria => String(diaria.Id)}
+                onRefresh={loadDiarias}
+                refreshing={loading}
+                renderItem={({ item })=> (
+                    <Card key={item.Id}>
+                        <CardItem style={styles.carditem}>
+                            <Left>
+                                <Image style={styles.foto} source={limpeza2}/>
+                                <Body style={styles.body}>
+                                    <Text>{item.Description}</Text>
+                                    <Text>{Moment(item.DataServico).locale('pt-br').format('L')}</Text>
+                                    <Text>{item.Residence.Rua}, {item.Residence.Number}</Text>
+                                </Body>
+                            </Left>
+                            <Right>
+                                <TouchableOpacity onPress={() => cancelService(item.Id) }>
+                                    <Text style={styles.cancelar}>CANCELAR</Text>
+                                </TouchableOpacity>                            
+                            </Right>
+                        </CardItem>                            
+                        <CardItem cardBody>
+                            <Image source={casa} style={{height: 300, width: null, flex: 1}}/>
+                        </CardItem>                    
+                    </Card>
+                    )}
+                />
             );
         }else{        
             return(
@@ -147,10 +175,8 @@ export default function Agendado({navigation}) {
 }
 const styles = StyleSheet.create({ 
     solicitacao: {
-        fontSize:15,
-        marginTop:70,
-        textAlign:'center',
-        paddingHorizontal:30        
+        fontSize:25,
+        textAlign:'center',     
     },
     solicitacaoView:{
         flex: 1,
@@ -180,6 +206,15 @@ const styles = StyleSheet.create({
         backgroundColor:'#F8F8FF',
         marginLeft:270,
         marginTop:-18,
+    },
+    icon3: {
+        color:'#00BFFF',
+        fontSize:80  
+    },
+    positionButton:{
+        position: 'absolute',
+        bottom: 10,
+        right: 15
     }
 });
   

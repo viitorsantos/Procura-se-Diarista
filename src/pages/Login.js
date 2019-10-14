@@ -51,9 +51,9 @@ export default function Login({ navigation }){
         .catch((error) => { console.error(error); });
 
         await AsyncStorage.setItem('user', JSON.stringify(result));        
-        navigation.navigate('Principal');        
-
-    };
+        navigation.navigate('Principal');   
+    }
+    
     if(!loading)
     {
         return (
