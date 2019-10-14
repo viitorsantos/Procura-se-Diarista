@@ -4,13 +4,11 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
 import CadastroEnderecos from './pages/CadastroEnderecos';
-import ClientePrincipal from './pages/ClientePrincipal';
-import PerfilCliente from './pages/PerfilCliente';
-import PerfilDiarista from './pages/PerfilDiarista';
+import Principal from './pages/Principal';
+import Perfil from './pages/Perfil';
 import SolicitaLimpeza from './pages/SolicitaLimpeza';
+import ConfirmaCasa from './pages/ConfirmaCasa';
 import ConfirmaLimpeza from './pages/ConfirmaLimpeza';
-import DiaristaPrincipal from './pages/DiaristaPrincipal';
-import ConfirmacaoLimpeza from './pages/ConfirmacaoLimpeza';
 import LimpezaConfirmada from './pages/LimpezaConfirmada';
 
 const Routes = createAppContainer(
@@ -19,13 +17,11 @@ const Routes = createAppContainer(
         Login,
         Cadastro,
         CadastroEnderecos,
-        ClientePrincipal,
-        PerfilCliente,
-        PerfilDiarista,
+        Principal,
+        Perfil,
         SolicitaLimpeza,
+        ConfirmaCasa,
         ConfirmaLimpeza,
-        DiaristaPrincipal,
-        ConfirmacaoLimpeza,
         LimpezaConfirmada
     })
 )
